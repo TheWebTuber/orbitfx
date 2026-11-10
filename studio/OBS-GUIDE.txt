@@ -1,0 +1,85 @@
+ORBITFX STUDIO BETA V3 — OBS AND VIRTUAL CAMERA
+
+1. GET STARTED
+Extract the whole ZIP before opening anything. Keep content.html, css, js,
+vendor, and cards together. Install Node.js LTS from https://nodejs.org if
+it is not already installed. On Windows, double-click START-STUDIO.cmd.
+Keep its console open, then visit http://127.0.0.1:8787/content.html.
+Alternatively host the complete folder on your HTTPS website.
+
+2. DESIGN YOUR SCENE
+Use Scene for the live source, green removal, and orbit controls.
+Use Add stuff for uploaded PNG/JPG/WebP/GIF images, text, and stickers.
+Use Effects for presets, particles, portal rings, glow, and backgrounds.
+Public beta starts with a generated test model. Select VDO.Ninja and enter your own
+stream ID or view link, then click Connect source. The sender must be live.
+Webcam is optional and requests permission only after Connect source.
+Green-screen test is a generated sample, never presented as your live model.
+
+3. SAVE AND TRANSFER TO OBS
+Download project saves all settings and uploaded images in a JSON file.
+Autosave belongs to your current browser. OBS has separate browser storage.
+
+When the scene is ready, use OBS / Save > Download clean OBS scene.
+Save the resulting scene-output.html in the same folder as content.html.
+This HTML contains a copy of your project, including uploaded images.
+Its CSS, JavaScript, and SDK still load from the included folders.
+The original editor stays editable; re-export to update OBS later.
+
+In OBS, add a Browser Source with URL:
+http://127.0.0.1:8787/scene-output.html
+Set width 1920, height 1080, and FPS 30 or 60.
+If hosted on your website, use that scene-output.html HTTPS URL instead.
+The clean scene starts without UI, cursor, or status messages.
+Right-click the source > Interact, then press H to restore controls.
+
+If you only use content.html?clean=1 as a Browser Source, it loads settings
+saved inside OBS, not settings from your separate browser. The clean scene
+download avoids that mismatch. Uploading an exported scene to a public
+website also publishes its embedded images; use localhost for private work.
+
+4. BACKGROUND OPTIONS
+Solid blue (#0000ff) is the original capture background.
+Transparent for OBS allows other OBS sources to show through; it does not
+remove the model, cards, or any optional effects. Use Clean overlay preset
+for an effect-free transparent background, then customize from there.
+Choose a solid or gradient background if you want a complete webcam scene.
+The webcam output from OBS does not carry a transparent alpha channel.
+
+5. TURN IT INTO A CAMERA
+The website itself cannot register an operating-system webcam device.
+OBS supplies this part: add the studio Browser Source to your scene, then
+click Start Virtual Camera in OBS. In your meeting/calling app, select
+OBS Virtual Camera as the camera. Select your microphone separately.
+This studio intentionally does not receive, record, or output audio.
+Avoid selecting OBS Virtual Camera as the studio's own webcam input:
+feeding an output back into itself creates a repeating feedback picture.
+
+6. HOTKEYS
+H: hide/show all UI and cursor.
+Space: pause/resume scene animation (the live model keeps moving).
+B: confetti burst, when motion is running.
+Hotkeys do not fire while typing in a field.
+Full screen uses the browser API; F11 is a fallback where it is unsupported.
+Clean preview windows sync saved edits within the same browser. OBS is a
+different browser and does not receive that preview channel.
+
+7. TROUBLESHOOTING
+No model: start the VDO.Ninja sender, verify its stream ID, reconnect.
+No webcam: use HTTPS/localhost and grant camera permission in the browser.
+Some embedded browsers do not allow webcam access; use VDO.Ninja in OBS.
+Green edges: lower green protection or adjust softness. Green model parts
+can disappear too. This is color keying, not AI subject recognition.
+Lost edits: import your last project. Keep project backups beyond autosave.
+Image limits: 4 MB per image, 24 megapixels, 24 designs, 30 overlay layers,
+and 24 MB total project JSON. Resize large assets before adding them.
+GIF files animate independently of the motion-pause button; pause affects
+the studio's own animations, not the contents of animated uploaded files.
+Slow scene: reduce cards, particles, glow, GIFs, resolution, or OBS FPS.
+This package was browser-tested. OBS Virtual Camera installation/routing
+must be configured in your own OBS installation.
+
+Official references:
+https://obsproject.com/kb/browser-source
+https://obsproject.com/kb/virtual-camera-guide
+https://sdk.vdo.ninja/

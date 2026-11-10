@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#0b0b18" />
+    <meta
+      name="description"
+      content="OrbitFX Studio is a lightweight browser-based visual effects studio for VTubers, streamers, OBS and live video. Add orbiting cards, animated GIFs, glow, chroma key and more."
+    />
+    <meta
+      property="og:title"
+      content="OrbitFX Studio — Make your stream a universe"
+    />
+    <meta
+      property="og:description"
+      content="Animated cards, glow, cosmic backgrounds and live scene effects. Create, save and export for OBS."
+    />
+    <title>OrbitFX Studio — Live effects that move with you</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/site.css" />
+    <script src="assets/site.js" defer></script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="nav-inner wrap">
+        <a class="brand" href="./index.html" aria-label="OrbitFX Studio home"
+          ><span class="brand-mark" aria-hidden="true"><i></i></span
+          ><span
+            >Orbit<span class="brand-accent">FX</span
+            ><small>STUDIO</small></span
+          ></a
+        >
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="nav-links"
+        >
+          <span class="menu-bars" aria-hidden="true">☰</span
+          ><span class="sr-only">Toggle navigation</span>
+        </button>
+        <nav class="nav-links" id="nav-links" aria-label="Main navigation">
+          <a href="#features">Features</a><a href="#how">How it works</a
+          ><a href="guide.html">Setup guide</a>
+          <a class="nav-launch" href="studio/content.html"
+            >Open Studio <span aria-hidden="true">↗</span></a
+          >
+        </nav>
+      </div>
+    </header>
+    <main id="main">
+      <section class="hero wrap">
+        <div class="hero-copy">
+          <div class="eyebrow">
+            <span class="signal"></span> BUILT FOR CREATORS
+            <span class="eyebrow-divider">/</span> PUBLIC BETA V3
+          </div>
+          <h1>
+            Your stream.<br /><span class="title-gradient"
+              >A whole new orbit.</span
+            >
+          </h1>
+          <p class="hero-intro">
+            Put your avatar in motion. Surround it with animated cards, glowing
+            effects, and worlds of your own — all from a lightweight browser
+            studio.
+          </p>
+          <div class="actions">
+            <a class="btn primary" href="studio/content.html"
+              ><span class="btn-icon">✦</span> Launch the studio
+              <span aria-hidden="true">↗</span></a
+            ><a
+              class="btn secondary"
+              href="downloads/OrbitFX-Studio-Beta-v3.zip"
+              download
+              >↓ Download beta</a
+            >
+          </div>
+          <div class="micro-features">
+            <span><span class="mini-check">✓</span> No account needed</span
+            ><span><span class="mini-check">✓</span> Works with OBS</span
+            ><span><span class="mini-check">✓</span> Save your scenes</span>
+          </div>
+        </div>
+        <div
+          class="preview-shell"
+          aria-label="Interactive visual illustration of orbiting card effects"
+        >
+          <div class="preview-top">
+            <span class="window-dots" aria-hidden="true"
+              ><i></i><i></i><i></i></span
+            ><span class="preview-label">LIVE PREVIEW</span
+            ><span class="preview-live"><i></i> EFFECT ENGINE</span>
+          </div>
+          <div class="preview-scene" id="preview-scene" data-look="arcane">
+            <div class="scene-grid"></div>
+            <div class="nebula nebula-a"></div>
+            <div class="nebula nebula-b"></div>
+            <div class="orbit-track track-one"></div>
+            <div class="orbit-track track-two"></div>
+            <div class="sample-orbit" aria-hidden="true">
+              <img
+                src="assets/orbit-card.webp"
+                alt=""
+                style="--angle: 0deg; --counter: 0deg; --delay: 0s"
+              />
+              <img
+                src="assets/orbit-card.webp"
+                alt=""
+                style="--angle: 60deg; --counter: -60deg; --delay: -0.2s"
+              />
+              <img
+                src="assets/orbit-card.webp"
+                alt=""
+                style="--angle: 120deg; --counter: -120deg; --delay: -0.4s"
+              />
+              <img
+                src="assets/orbit-card.webp"
+                alt=""
+                style="--angle: 180deg; --counter: -180deg; --delay: -0.6s"
+              />
+              <img
+                src="assets/orbit-card.webp"
+                alt=""
+                style="--angle: 240deg; --counter: -240deg; --delay: -0.8s"
+              />
+              <img
+                src="assets/orbit-card.webp"
+                alt=""
+                style="--angle: 300deg; --counter: -300deg; --delay: -1s"
+              />
+            </div>
+            <div class="avatar-glow"></div>
+            <svg
+              class="avatar"
+              viewBox="0 0 260 320"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <defs>
+                <linearGradient
+                  id="faceShade"
+                  x1="40"
+                  y1="5"
+                  x2="235"
+                  y2="320"
+                  gradientUnits="userSpaceOnUse"
+                >
+                  <stop stop-color="#8783DD" />
+                  <stop offset=".47" stop-color="#484578" />
+                  <stop offset="1" stop-color="#201D42" />
+                </linearGradient>
+                <linearGradient
+                  id="coatShade"
+                  x1="60"
+                  y1="190"
+                  x2="205"
+                  y2="320"
+                >
+                  <stop stop-color="#33345F" />
+                  <stop offset="1" stop-color="#12152E" />
+                </linearGradient>
+              </defs>
+              <path
+                d="M27 82 62 13l49 41h36l51-43 34 72-13 93-33 37 20 21 33 83H19l31-88 18-17-30-38Z"
+                fill="url(#faceShade)"
+                stroke="#BCB2FF"
+                stroke-width="3.5"
+                stroke-linejoin="round"
+              />
+              <path d="M49 82 66 37l30 28-11 29Z" fill="#211B41" />
+              <path d="m171 67 23-30 17 44-37 13Z" fill="#211B41" />
+              <path
+                d="M50 228q36-23 80 9 46-34 83-9l31 89H17Z"
+                fill="url(#coatShade)"
+                stroke="#8178BF"
+                stroke-width="2"
+              />
+              <path d="m72 137 46 7-22 13-26-7Z" fill="#FF7C98" />
+              <path d="m143 144 46-7 2 13-26 7Z" fill="#FF7C98" />
+              <path d="m109 180 21 10 21-10-21 24Z" fill="#18132A" />
+              <path
+                d="m130 204-11 14m11-14 11 14"
+                stroke="#E5C9E8"
+                stroke-width="3"
+                stroke-linecap="round"
+              />
+              <path d="M94 235q36 19 72 0" stroke="#7E78B8" stroke-width="3" />
+              <path
+                d="M88 268 129 293l42-25"
+                stroke="#6966AB"
+                stroke-width="3"
+                stroke-linecap="round"
+              />
+            </svg>
+            <div class="preview-caption">
+              <span class="sound-wave">✧</span
+              ><span>YOUR MODEL. YOUR MAGIC.</span>
+            </div>
+          </div>
+          <div class="preview-bottom">
+            <div>
+              <span class="tool-caption">TRY A LOOK</span>
+              <div
+                class="preview-presets"
+                role="group"
+                aria-label="Choose preview style"
+              >
+                <button
+                  class="look-btn is-active"
+                  data-look="arcane"
+                  type="button"
+                  aria-pressed="true"
+                >
+                  Arcane</button
+                ><button
+                  class="look-btn"
+                  data-look="cosmic"
+                  type="button"
+                  aria-pressed="false"
+                >
+                  Cosmic</button
+                ><button
+                  class="look-btn"
+                  data-look="rose"
+                  type="button"
+                  aria-pressed="false"
+                >
+                  Rose
+                </button>
+              </div>
+            </div>
+            <div class="preview-buttons">
+              <button
+                id="pause-preview"
+                type="button"
+                aria-label="Pause preview animation"
+                title="Pause animation"
+              >
+                Ⅱ</button
+              ><button
+                id="burst-preview"
+                type="button"
+                title="Confetti!"
+                aria-label="Show confetti"
+              >
+                ✦
+              </button>
+            </div>
+          </div>
+          <p class="demo-note">
+            Interactive illustration — open the studio for the real editor.
+          </p>
+        </div>
+      </section>
+      <section class="stats-row wrap" aria-label="Studio highlights">
+        <div><strong>36</strong><span>individual media slots</span></div>
+        <div><strong>3</strong><span>orbit shapes</span></div>
+        <div><strong>2</strong><span>rotation styles</span></div>
+        <div><strong>OBS</strong><span>clean scene export</span></div>
+      </section>
+      <section class="feature-section" id="features">
+        <div class="wrap">
+          <div class="section-heading">
+            <div>
+              <span class="kicker">THE CREATIVE TOOLKIT</span>
+              <h2>One studio. <em>Endless scenes.</em></h2>
+            </div>
+            <p>
+              Built for VTubers, streamers, and creators who want custom effects
+              without a complicated production pipeline.
+            </p>
+          </div>
+          <div class="feature-grid">
+            <article class="feature-card feature-wide">
+              <div class="feature-icon">◎</div>
+              <div>
+                <h3>Bring your orbit to life</h3>
+                <p>
+                  Arrange up to 36 media objects around your avatar. Choose
+                  ring, helix, or wave, then set full rotation or a
+                  left-to-right swing. Adjust individual cards without losing
+                  your shared formation.
+                </p>
+              </div>
+              <div class="little-orbit" aria-hidden="true">
+                <span></span><span></span><span></span><b>✦</b>
+              </div>
+            </article>
+            <article class="feature-card">
+              <div class="feature-icon">✧</div>
+              <h3>Effects with atmosphere</h3>
+              <p>
+                Glow, stars, snow, embers, confetti, portal rings and
+                ready-to-use cosmic looks. Go subtle or go spectacular.
+              </p>
+            </article>
+            <article class="feature-card">
+              <div class="feature-icon">▧</div>
+              <h3>Media that moves</h3>
+              <p>
+                Use PNG, JPG, WebP and GIF files, plus text and overlay layers.
+                Custom backgrounds and media cards are yours to shape.
+              </p>
+            </article>
+            <article class="feature-card">
+              <div class="feature-icon">◈</div>
+              <h3>Camera meets creativity</h3>
+              <p>
+                Use an optional webcam or VDO.Ninja video feed. Remove green,
+                blue, or a custom background color and place effects around the
+                subject.
+              </p>
+            </article>
+            <article class="feature-card">
+              <div class="feature-icon">⌘</div>
+              <h3>Your scene, saved</h3>
+              <p>
+                Local autosave, project JSON import/export, selectable presets,
+                and clean OBS scene HTML. Keep setups ready for your next
+                stream.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section class="workflow wrap" id="how">
+        <div class="section-heading">
+          <div>
+            <span class="kicker">START CREATING</span>
+            <h2>From setup to <em>showtime.</em></h2>
+          </div>
+          <p>
+            No account and no dedicated installer. Use the online studio or
+            download the beta for your own setup.
+          </p>
+        </div>
+        <div class="steps">
+          <article>
+            <span class="step-index">01 / CONNECT</span>
+            <h3>Choose your source</h3>
+            <p>
+              Start with the built-in test feed, your webcam, or a VDO.Ninja
+              stream you control.
+            </p>
+          </article>
+          <article>
+            <span class="step-index">02 / CREATE</span>
+            <h3>Build your look</h3>
+            <p>
+              Customize orbit paths, objects, key colors, backgrounds, and
+              animated effects. Save your project.
+            </p>
+          </article>
+          <article>
+            <span class="step-index">03 / GO LIVE</span>
+            <h3>Bring it to OBS</h3>
+            <p>
+              Export a clean scene, add it as an OBS Browser Source, and go live
+              with your own visual style.
+            </p>
+          </article>
+        </div>
+        <div class="workflow-actions">
+          <a class="text-link" href="guide.html"
+            >Read the full setup guide <span aria-hidden="true">↗</span></a
+          ><a class="text-link" href="studio/OBS-GUIDE.txt"
+            >Original OBS instructions <span aria-hidden="true">↗</span></a
+          >
+        </div>
+      </section>
+      <section class="download-area" id="download">
+        <div class="wrap download-panel">
+          <div class="download-art" aria-hidden="true">
+            <span class="planet planet-one"></span
+            ><span class="planet planet-two"></span
+            ><span class="planet-core">✦</span>
+          </div>
+          <div class="download-copy">
+            <span class="kicker">READY WHEN YOU ARE</span>
+            <h2>Take the studio <em>with you.</em></h2>
+            <p>
+              Download the beta as a ZIP, keep your settings locally, and start
+              it on Windows with the included launcher. Or launch the editor
+              directly from this website.
+            </p>
+            <div class="download-actions">
+              <a
+                class="btn primary"
+                href="downloads/OrbitFX-Studio-Beta-v3.zip"
+                download
+                >↓ Download OrbitFX beta v3</a
+              ><a class="btn secondary" href="studio/content.html"
+                >Launch online ↗</a
+              >
+            </div>
+            <small
+              >Local download requires Node.js LTS to serve the editor. Online
+              use requires HTTPS. The demo does not automatically connect to
+              anyone's live feed.</small
+            >
+          </div>
+        </div>
+      </section>
+      <section class="faq wrap" id="faq">
+        <div class="section-heading">
+          <div>
+            <span class="kicker">GOOD TO KNOW</span>
+            <h2>A few quick <em>answers.</em></h2>
+          </div>
+        </div>
+        <div class="faq-grid">
+          <details>
+            <summary>Is OrbitFX Studio free to try?</summary>
+            <p>
+              This beta is provided as a direct download, with no sign-up or
+              payment step on this page. No paid plans are offered here.
+            </p>
+          </details>
+          <details>
+            <summary>Do I need to install anything?</summary>
+            <p>
+              To use the version hosted on this website, no installer is needed.
+              For the downloadable local version, extract the ZIP and run the
+              supplied Windows launcher with Node.js LTS installed.
+            </p>
+          </details>
+          <details>
+            <summary>Can I use it in OBS?</summary>
+            <p>
+              Yes. Export a clean OBS scene from the editor, then add the
+              exported page as an OBS Browser Source. The guide explains how to
+              keep the files together.
+            </p>
+          </details>
+          <details>
+            <summary>Will it access my camera automatically?</summary>
+            <p>
+              No. The public release starts with a generated test feed. Webcam
+              permission is requested only when you select and connect your
+              webcam. VDO.Ninja sources must be connected separately.
+            </p>
+          </details>
+          <details>
+            <summary>Will my project stay saved?</summary>
+            <p>
+              The editor autosaves in your browser, but that can be cleared.
+              Export a project JSON file to keep a portable backup, especially
+              before changing computers or browsers.
+            </p>
+          </details>
+          <details>
+            <summary>Can I use it with a VTuber model?</summary>
+            <p>
+              Yes. Feed your live model from a supported source such as
+              VDO.Ninja or a webcam/virtual-camera setup. You may need chroma
+              keying to remove its background.
+            </p>
+          </details>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap footer-main">
+        <div>
+          <a class="brand" href="index.html"
+            ><span class="brand-mark" aria-hidden="true"><i></i></span
+            ><span
+              >Orbit<span class="brand-accent">FX</span
+              ><small>STUDIO</small></span
+            ></a
+          >
+          <p>Live effects that move with you.</p>
+        </div>
+        <div class="footer-links">
+          <a href="studio/content.html">Open Studio</a
+          ><a href="guide.html">Documentation</a
+          ><a href="downloads/OrbitFX-Studio-Beta-v3.zip" download
+            >Download beta</a
+          ><a href="studio/THIRD-PARTY-NOTICES.txt">Third-party notices</a>
+        </div>
+      </div>
+      <div class="wrap footer-bottom">
+        <span>© 2026 Portal Master Of Games · OrbitFX Studio</span
+        ><span>Beta v3 · Built for creators</span>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>OrbitFX Studio · Live effects by Portal Master Of Games</title><link rel="stylesheet" href="css/studio.css"></head>
+<body>
+  <svg class="studio-filter-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <filter id="studio-green-key" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+        <!-- A pixel is green only when green exceeds BOTH red and blue. -->
+        <feColorMatrix id="key-red" in="SourceGraphic" type="matrix" result="green-over-red"
+          values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  -8.3333 8.3333 0 0 -1"/>
+        <feColorMatrix id="key-blue" in="SourceGraphic" type="matrix" result="green-over-blue"
+          values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 8.3333 -8.3333 0 -1"/>
+        <feComposite in="green-over-red" in2="green-over-blue" operator="in" result="green-mask"/>
+        <feComposite in="SourceGraphic" in2="green-mask" operator="out"/>
+      </filter>
+    </defs>
+  </svg>
+
+
+<main id="stage" aria-label="Live scene preview">
+  <div id="back-effects" aria-hidden="true"><div id="portal-effect"></div><div id="particles"></div></div>
+  <div id="world"><div id="model-plane"><div id="model-key"><video id="model-feed" autoplay muted playsinline aria-label="Live model"></video></div></div></div>
+  <div id="overlay-back"></div><div id="overlay-front"></div>
+  <div id="scanlines-effect" aria-hidden="true"></div><div id="letterbox-effect" aria-hidden="true"></div>
+</main>
+<aside id="panel" aria-label="Studio controls">
+  <header><div><p class="eyebrow">PORTAL MASTER OF GAMES</p><h1>OrbitFX <span>STUDIO</span></h1><a class="site-return" href="../index.html" title="Return to OrbitFX website">← Website</a></div><button id="hide-ui" title="Hide controls — press H to restore">Hide UI</button></header>
+  <div class="toolbar"><button id="pause" aria-pressed="false">Pause motion</button><button id="fullscreen">Full screen</button><button id="clean-preview">Clean preview ↗</button></div>
+  <p id="status" role="status">Preparing your scene…</p><p id="save-status" class="save-status" role="status"></p>
+  <nav class="tabs" aria-label="Editor sections"><button data-tab="scene" aria-pressed="true">Scene</button><button data-tab="cards" aria-pressed="false">Cards</button><button data-tab="layers" aria-pressed="false">Add stuff</button><button data-tab="effects" aria-pressed="false">Effects</button><button data-tab="output" aria-pressed="false">OBS / Save</button></nav>
+  <section data-section="scene">
+        <h2>Background</h2><label for="backgroundMode">Background mode<select id="backgroundMode" data-setting><option value="solid">Solid color</option><option value="transparent">Transparent for OBS</option><option value="gradient">Gradient</option></select></label>
+    <div class="row"><label for="background">Main color<input id="background" type="color" data-setting value="#0000ff"></label><label for="secondary">Second color<input id="secondary" type="color" data-setting value="#5a128a"></label></div>
+    <div class="color-wheel-wrap"><canvas id="color-wheel" width="220" height="220" tabindex="0" role="slider" aria-label="Background color wheel. Left and right change hue; up and down change saturation." aria-valuemin="0" aria-valuemax="360" aria-valuenow="240"></canvas><p class="help">Click or drag around the wheel. Center = less saturated. The color picker above is also available.</p><label for="wheel-value">Color brightness<input id="wheel-value" type="range" min="0" max="100" value="100"></label><output id="wheel-hex">#0000ff</output></div>
+<h2>Live model</h2><label for="modelGlow">Model glow<output for="modelGlow"></output><input type="range" id="modelGlow" min="0" max="30" value="0" data-unit="px" data-setting></label><label for="modelGlowColor">Model glow color<input id="modelGlowColor" type="color" data-setting value="#aa88ff"></label>
+    <label for="source">Video source<select id="source"><option value="vdo">VDO.Ninja model</option><option value="camera">My webcam</option><option value="demo" selected>Green-screen test</option><option value="none">No model</option></select></label>
+    <label for="stream-id" id="stream-label">Stream ID or VDO.Ninja view link<input id="stream-id" type="text" value="your-stream-id" autocomplete="off"></label>
+    <div class="row"><button id="connect">Connect source</button><button id="stop-source">Stop source</button></div>
+    <p class="help">Your model stays muted. Webcam access starts only when you click Connect source.</p>
+    <label for="modelSize">Model size<output for="modelSize"></output><input type="range" id="modelSize" min="25" max="140" value="85" data-unit="%" data-setting></label><label for="modelX">Move left / right<output for="modelX"></output><input type="range" id="modelX" min="-50" max="50" value="0" data-unit="%" data-setting></label><label for="modelY">Move up / down<output for="modelY"></output><input type="range" id="modelY" min="-50" max="50" value="0" data-unit="%" data-setting></label>
+<label for="modelZ">Model distance · farther ← → closer<output for="modelZ"></output><input id="modelZ" type="range" min="-700" max="500" value="0" data-unit="px" data-setting></label>
+    <label class="check"><input id="mirror" type="checkbox" data-setting>Flip model / camera horizontally</label><label class="check"><input id="flipVertical" type="checkbox" data-setting>Flip model / camera vertically</label>
+    <details><summary>Background removal · any color</summary><label class="check"><input id="keyEnabled" type="checkbox" data-setting>Enable chroma key</label><label for="modelKeyMode">Key mode<select id="modelKeyMode" data-setting><option value="green">Green screen</option><option value="blue">Blue screen</option><option value="custom">Custom color (including white / black)</option></select></label><label for="modelKeyColor">Color to remove<input id="modelKeyColor" type="color" value="#ffffff" data-setting></label><label for="modelTolerance">Custom color tolerance<output for="modelTolerance"></output><input type="range" id="modelTolerance" min="0" max="100" value="12" data-unit="%" data-setting></label><label for="threshold">Green / blue protection<output for="threshold"></output><input type="range" id="threshold" min="0" max="50" value="6" data-unit="%" data-setting></label><label for="softness">Edge softness<output for="softness"></output><input type="range" id="softness" min="1" max="40" value="8" data-unit="%" data-setting></label><p class="help">Choose Custom color to remove any color, including white. Increase custom tolerance to remove similar shades. Lower protection removes more green/blue in those modes. Matching colors in the subject can disappear too.</p></details>
+    <h2>Orbiting cards</h2>
+    <label for="cardCount">Number of cards<output for="cardCount"></output><input type="range" id="cardCount" min="0" max="36" value="12" data-unit="" data-setting></label><label for="speed">Orbit speed<output for="speed"></output><input type="range" id="speed" min="-40" max="40" value="9" data-unit="°/s" data-setting></label><label for="spin">Card spin<output for="spin"></output><input type="range" id="spin" min="0" max="100" value="18" data-unit="°/s" data-setting></label><label for="tilt">Orbit tilt<output for="tilt"></output><input type="range" id="tilt" min="-55" max="55" value="18" data-unit="°" data-setting></label><label for="radius">Orbit width<output for="radius"></output><input type="range" id="radius" min="20" max="110" value="85" data-unit="%" data-setting></label><label for="depth">3D depth<output for="depth"></output><input type="range" id="depth" min="0" max="100" value="55" data-unit="%" data-setting></label><label for="cardSize">Card size<output for="cardSize"></output><input type="range" id="cardSize" min="3" max="35" value="15" data-unit="vw" data-setting></label>
+    <label for="orbitRoll">Orbit angle · lean left / right<output for="orbitRoll"></output><input type="range" id="orbitRoll" min="-180" max="180" value="0" data-unit="°" data-setting></label><p class="help">Turns the entire circular path around its center. The model stays upright and in place.</p><label for="orbitX">Orbit center · left / right<output for="orbitX"></output><input type="range" id="orbitX" min="-60" max="60" value="0" data-unit="%" data-setting></label><label for="orbitY">Orbit center · up / down<output for="orbitY"></output><input type="range" id="orbitY" min="-60" max="60" value="0" data-unit="%" data-setting></label><label for="sway">Left-to-right movement<output for="sway"></output><input type="range" id="sway" min="0" max="60" value="0" data-unit="%" data-setting></label><label for="swaySpeed">Movement speed<output for="swaySpeed"></output><input type="range" id="swaySpeed" min="1" max="100" value="20" data-unit="" data-setting></label><label for="orbitMotion">Rotation style<select id="orbitMotion" data-setting><option value="continuous">Full rotation</option><option value="swing">Swing left to right</option></select></label><label for="orbitStyle">Orbit shape<select id="orbitStyle" data-setting><option value="ring">Ring</option><option value="helix">Helix</option><option value="wave">Wave</option></select></label>
+    <label class="file-button">Add card images<input id="card-upload" type="file" accept="image/png,image/jpeg,image/webp,image/gif" multiple></label>
+    <div id="card-library" class="asset-list"></div>
+  </section>
+  <section data-section="cards" hidden>
+ <h2>Every card is yours</h2><p class="help">Choose a number, then change only that card. Set the total number in Scene → Orbiting cards.</p>
+ <div id="slot-grid" aria-label="Numbered cards"></div><label class="check"><input id="show-numbers" type="checkbox">Show numbers in the scene (editor only)</label>
+ <fieldset id="slot-editor"><legend id="slot-title">Card 1</legend>
+ <label for="slot-name">Card name<input id="slot-name" maxlength="60"></label>
+ <label for="slot-type">Content<select id="slot-type"><option value="library">Shared card library</option><option value="image">Image / GIF</option><option value="video">Movie (MP4 / WebM)</option><option value="vdo">Live VDO.Ninja</option><option value="web">Embedded webpage</option></select></label>
+ <label for="slot-url">Media URL or VDO.Ninja view link<input id="slot-url" type="text" placeholder="https://…"></label><button id="slot-apply">Use this link</button>
+ <label class="file-button">Upload to this card<input id="slot-upload" type="file" accept="image/png,image/jpeg,image/webp,image/gif,video/mp4,video/webm"></label>
+ <p id="slot-media-status" class="help"></p>
+ <p class="help">Movies loop silently. Use a direct movie URL or a small upload (up to 12 MB). Webpages need an embed URL and may block embedding; webpage cards cannot be chroma-keyed. VDO.Ninja feeds can.</p>
+ <label class="check"><input id="slot-visible" type="checkbox">Visible</label>
+ <label for="slot-size">Individual size<output for="slot-size"></output><input type="range" id="slot-size" min="20" max="300" value="100" data-unit=""></label><label for="slot-x">Left / right offset<output for="slot-x"></output><input type="range" id="slot-x" min="-1000" max="1000" value="0" data-unit=""></label><label for="slot-y">Up / down offset<output for="slot-y"></output><input type="range" id="slot-y" min="-700" max="700" value="0" data-unit=""></label><label for="slot-z">Distance · farther ← → closer<output for="slot-z"></output><input type="range" id="slot-z" min="-700" max="500" value="0" data-unit=""></label><label for="slot-rotation">Card angle<output for="slot-rotation"></output><input type="range" id="slot-rotation" min="-180" max="180" value="0" data-unit=""></label>
+ <label class="check"><input id="slot-face" type="checkbox">Always face the camera</label>
+ <label for="slot-key">Chroma key<select id="slot-key"><option value="off">Off</option><option value="green">Remove green</option><option value="blue">Remove blue</option><option value="custom">Remove a custom color</option></select></label>
+ <label for="slot-keyColor">Color to remove<input id="slot-keyColor" type="color" value="#ffffff"></label><label for="slot-tolerance">Custom color tolerance<output for="slot-tolerance"></output><input type="range" id="slot-tolerance" min="0" max="100" value="12" data-unit="%" ></label><p class="help">For an image or video with baked-in white, choose Custom color and white. Transparent PNG/WebP backgrounds stay transparent with keying Off. An embedded webpage controls its own background.</p><label class="check"><input id="slot-flipX" type="checkbox">Flip this card horizontally</label><label class="check"><input id="slot-flipY" type="checkbox">Flip this card vertically</label><label for="slot-threshold">Protect matching colors<output for="slot-threshold"></output><input type="range" id="slot-threshold" min="0" max="50" value="6" data-unit=""></label><label for="slot-softness">Key edge softness<output for="slot-softness"></output><input type="range" id="slot-softness" min="1" max="40" value="8" data-unit=""></label><label for="slot-glow">Individual glow<output for="slot-glow"></output><input type="range" id="slot-glow" min="0" max="40" value="0" data-unit=""></label>
+ <label for="slot-glowColor">Glow color<input id="slot-glowColor" type="color" value="#aa88ff"></label>
+ <button id="slot-reset">Reset this card</button>
+ </fieldset></section>
+  <section data-section="layers" hidden>
+    <h2>Make it yours</h2><p class="help">Add logos, PNGs, GIFs, captions, or stickers. Select a layer to position it. Images stay on this device.</p>
+    <div class="row"><label class="file-button">Add images<input id="overlay-upload" type="file" accept="image/png,image/jpeg,image/webp,image/gif" multiple></label><button id="add-text">Add text</button></div>
+    <div class="stickers" aria-label="Add a sticker"><button data-sticker="✨" aria-label="Add sparkle sticker">✨</button><button data-sticker="🌙" aria-label="Add moon sticker">🌙</button><button data-sticker="🔥" aria-label="Add fire sticker">🔥</button><button data-sticker="💜" aria-label="Add heart sticker">💜</button><button data-sticker="🎮" aria-label="Add game controller sticker">🎮</button><button data-sticker="⭐" aria-label="Add star sticker">⭐</button></div>
+    <h2>Your layers <small id="layer-count"></small></h2><div id="layer-list"></div>
+    <fieldset id="layer-editor" hidden><legend>Selected layer</legend>
+      <label for="layer-name">Name<input id="layer-name" maxlength="60"></label>
+      <label for="layer-text" id="layer-text-label">Text<textarea id="layer-text" maxlength="300" rows="3"></textarea></label>
+      <label for="layer-color" id="layer-color-label">Text color<input id="layer-color" type="color"></label>
+      <label for="layer-x">Left / right<output for="layer-x"></output><input type="range" id="layer-x" min="0" max="100" value="50" data-unit="%"></label><label for="layer-y">Up / down<output for="layer-y"></output><input type="range" id="layer-y" min="0" max="100" value="50" data-unit="%"></label><label for="layer-size">Size<output for="layer-size"></output><input type="range" id="layer-size" min="2" max="80" value="20" data-unit="%"></label><label for="layer-rotation">Rotation<output for="layer-rotation"></output><input type="range" id="layer-rotation" min="-180" max="180" value="0" data-unit="°"></label><label for="layer-opacity">Opacity<output for="layer-opacity"></output><input type="range" id="layer-opacity" min="0" max="100" value="100" data-unit="%"></label>
+<label for="layer-z">Distance · farther ← → closer<output for="layer-z"></output><input id="layer-z" type="range" min="-700" max="500" value="0" data-unit="px" ></label>
+      <label for="layer-depth">Placement<select id="layer-depth"><option value="front">In front of the scene</option><option value="back">Behind the model and cards</option></select></label>
+      <label for="layer-animation">Animation<select id="layer-animation"><option value="none">Still</option><option value="float">Float</option><option value="spin">Spin</option><option value="pulse">Gentle pulse</option></select></label>
+      <label class="check"><input id="layer-visible" type="checkbox">Visible</label>
+      <div class="row"><button id="duplicate-layer">Duplicate</button><button id="raise-layer">Move forward</button><button id="delete-layer" class="danger">Remove</button></div>
+    </fieldset>
+  </section>
+  <section data-section="effects" hidden>
+    <h2>Looks, without the setup</h2><div class="presets"><button data-preset="classic">Classic blue</button><button data-preset="arcane">Arcane portal</button><button data-preset="cosmic">Cosmic</button><button data-preset="celebrate">Celebration</button><button data-preset="snow">Snowfall</button><button data-preset="clean">Clean overlay</button></div>
+    <p class="help">Presets change effects and backgrounds. Your images, text, and model stay in place.</p>
+    <h2>Atmosphere</h2><label for="particleType">Particles<select id="particleType" data-setting><option value="none">None</option><option value="stars">Stars</option><option value="snow">Snow</option><option value="embers">Embers</option><option value="hearts">Hearts</option><option value="confetti">Confetti</option></select></label>
+    <label for="particleAmount">Particle count<output for="particleAmount"></output><input type="range" id="particleAmount" min="0" max="100" value="35" data-unit="" data-setting></label><label for="particleSpeed">Particle speed<output for="particleSpeed"></output><input type="range" id="particleSpeed" min="1" max="100" value="30" data-unit="" data-setting></label>
+    <label class="check"><input id="portal" type="checkbox" data-setting>Glowing portal rings</label><label class="check"><input id="scanlines" type="checkbox" data-setting>Retro scanlines</label><label class="check"><input id="letterbox" type="checkbox" data-setting>Cinema bars</label>
+    <label for="accent">Effect color<input id="accent" type="color" data-setting value="#aa88ff"></label>
+    <label for="cardGlow">Card glow<output for="cardGlow"></output><input type="range" id="cardGlow" min="0" max="30" value="0" data-unit="px" data-setting></label><label for="hue">Model hue shift<output for="hue"></output><input type="range" id="hue" min="0" max="360" value="0" data-unit="°" data-setting></label><label for="saturation">Model color intensity<output for="saturation"></output><input type="range" id="saturation" min="0" max="200" value="100" data-unit="%" data-setting></label><label for="brightness">Model brightness<output for="brightness"></output><input type="range" id="brightness" min="50" max="150" value="100" data-unit="%" data-setting></label>
+    <button id="confetti-burst">Confetti burst · B</button><p class="help">Pause motion freezes orbiting cards, particles, and animated layers. Live video keeps playing.</p>
+  </section>
+  <section data-section="output" hidden>
+    <h2>Save your studio</h2><div class="row"><button id="export-project">Download project</button><label class="file-button">Load project<input id="import-project" type="file" accept=".json,application/json"></label></div>
+    <p class="help">A project includes your settings, uploaded images, and layers. Autosave is local to this browser; OBS has its own storage.</p>
+    <h2>OBS &amp; live camera</h2><button id="export-output" class="primary">Download clean OBS scene</button>
+    <p>Save <strong>scene-output.html</strong> beside this app’s <strong>content.html</strong>. It includes your project and starts with the UI hidden.</p>
+    <ol><li>Run <strong>START-STUDIO.cmd</strong> (Node.js required), or host this folder over HTTPS.</li><li>In OBS, add a <strong>Browser Source</strong> using <strong>http://127.0.0.1:8787/scene-output.html</strong>. Set 1920 × 1080 and 30 or 60 FPS.</li><li>For webcam use, click <strong>Start Virtual Camera</strong> in OBS, then choose <strong>OBS Virtual Camera</strong> in your calling app.</li></ol>
+    <p class="help">A website cannot install a virtual webcam by itself. OBS supplies the camera device. Keep the background solid for calls; transparency is for compositing in OBS.</p>
+    <div class="row"><button id="copy-link">Copy clean page URL</button><button id="download-guide">Download OBS guide</button></div>
+    <p class="help">A copied URL does not transfer browser-saved images/settings to OBS. Use the clean OBS scene download to transfer your complete project.</p>
+    <details><summary>Shortcuts &amp; capture tips</summary><p><kbd>H</kbd> hide/show all UI · <kbd>Space</kbd> pause motion · <kbd>B</kbd> confetti burst. Shortcuts are inactive while typing.</p><p>Open <strong>?clean=1</strong> for no controls or cursor. In OBS, right-click the Browser Source → Interact to use the shortcuts.</p><p>Clean-preview windows sync changes in this browser. OBS does not share that connection: re-export your scene after editing.</p><p>Transparent mode removes only the background; the blue, gradient, portal, and particle effects are optional.</p></details>
+    <details><summary>Reset</summary><button id="reset-effects">Reset effects only</button><p class="help">Keeps your model, cards, and layers.</p></details>
+  </section>
+  <footer>OrbitFX Studio · Beta v3 · Made by Portal Master Of Games</footer>
+</aside>
+<noscript><p class="noscript">Enable JavaScript to use the studio.</p></noscript>
+<script id="embedded-project" type="application/json">null</script>
+<script src="js/studio.js" defer></script>
+</body></html>

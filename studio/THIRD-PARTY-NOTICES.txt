@@ -1,0 +1,10 @@
+VDO.Ninja SDK 1.6.1
+Copyright (c) 2025–2026 Steve Seguin. All rights reserved.
+License: Mozilla Public License 2.0 (MPL-2.0).
+The unmodified source is included in vendor/vdoninja-sdk.js.
+Obtain the license text at https://www.mozilla.org/MPL/2.0/.
+Upstream source: https://github.com/steveseguin/ninjasdk
+Distribution source: https://cdn.jsdelivr.net/npm/@vdoninja/sdk@1.6.1/vdoninja-sdk.js
+
+The original card artwork is supplied by the user. No new ownership or
+third-party licensing claims are made for that artwork.
